@@ -17,6 +17,7 @@ Este teste tem por objetivos principais avaliar:
 
 Crie um projeto com o design da imagem acima, listando os videos de um canal do youtube de sua escolha.
 
+Utilize a [API do youtube](https://developers.google.com/youtube/v3/docs) para listar os videos
 
 ## Pontos principais
 
