@@ -15,7 +15,7 @@
 
 ****
 
-## Desafio 🏌️ 🏌️ 🏌️
+## Desafio 🚀 🚀 🚀
 
 ![screen](/image.png)
 
@@ -35,7 +35,7 @@ O layout da **home** não precisa ser exatamente como o do wireframe. Você pode
 - [ ] Fornecer um mecanismo para o usuário poder pesquisar vídeos
 - [ ] Possuir home page que exiba algum conteúdo interessante para uma plataforma de vídeos
 - [ ] Fornecer uma estrutura de gerência do estado da aplicação
-- [ ] Possir histórico das buscas realizadas (persistir localmente)
+- [ ] Possuir histórico das buscas realizadas (persistir localmente)
 
 **Requisitos extras** 
 
