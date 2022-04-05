@@ -5,17 +5,19 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages/Home';
-import Header from './components/Header';
+import { Header } from './components';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="Home" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="Home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
