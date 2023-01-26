@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es2016",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "jsx": "preserve",
+    "types": ["node"],
+    "paths": {
+      "@modules/*": ["./src/modules/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@ui/*": ["./src/ui/*"],
+      "@/*": ["./*"],
+    },
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "App.vue.ts"],
+}

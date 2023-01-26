@@ -1,0 +1,15 @@
+.p-progress-spinner {
+  height: 26px;
+  width: 40px;
+  margin-right: 6px;
+}
+.p-progress-spinner-svg {
+  height: 20px;
+}
+.p-progress-spinner-circle {
+  stroke: var(--primary-color) !important;
+}
+
+.p-progressbar .p-progressbar-value {
+  background-color: var(--primary-color);
+}

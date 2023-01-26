@@ -1,0 +1,12 @@
+.p-rating {
+    gap: 2px;
+
+    .p-rating-item .p-rating-icon {
+        font-size: 12px;
+        color: var(--tertiary-color);
+    }
+    .p-rating-item.p-rating-item-active .p-rating-icon {
+        font-size: 12px;
+        color: var(--warning-color);
+    }
+}

@@ -1,0 +1,9 @@
+.p-scrollpanel {
+    .p-scrollpanel-bar {
+        background-color: var(--tertiary-color-light-200);
+
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}

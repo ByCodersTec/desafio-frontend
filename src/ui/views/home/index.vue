@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <div class="p-10">
+        <p>Bem vindo ao projeto</p>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useStore } from '@providers/store';
+import { computed } from 'vue';
+
+const store = useStore()
+
+</script>
+
+<style scoped>
+</style>

@@ -1,0 +1,32 @@
+.p-tabview {
+    .p-tabview-panels {
+        color: var(--primary-color);
+        padding: 0px;
+    }
+
+    .p-tabview-nav {
+        display: flex;
+        justify-content: center;
+    
+        .p-tabview-header {
+        flex: 1 0 20%;
+    
+            .p-tabview-nav-link {
+                display: flex;
+                justify-content: center;
+            }
+            .p-tabview-nav-link:not(.p-disabled):focus {
+                box-shadow: none;
+            }
+    
+    
+            &.p-highlight {
+                    .p-tabview-header-action {
+                    border-color: var(--secondary-color);
+                    color: var(--secondary-color);
+    
+                    }
+            }
+        }
+    }
+}

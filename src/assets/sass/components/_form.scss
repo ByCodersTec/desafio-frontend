@@ -1,0 +1,34 @@
+.ts-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: var(--primary-color-dark);
+
+    label {
+        font-weight: bold;
+    }
+
+    &--modal {
+        label {
+            text-transform: uppercase;
+        }
+    }
+
+    &__line {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    &__group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__title {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}

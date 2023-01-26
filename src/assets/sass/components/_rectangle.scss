@@ -1,0 +1,27 @@
+.bg-rectangle {
+    border-radius: 5px;
+    color: var(--light-color);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 1px 4px;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    
+    &--warning {
+        background-color: var(--warning-color);
+        color: var(--dark-color);
+    }
+
+    &--danger {
+        background-color: var(--danger-color);
+    }
+
+    &--success {
+        background-color: var(--success-color);
+    }
+
+    &--default {
+        background-color: var(--blue-color);
+    }
+}

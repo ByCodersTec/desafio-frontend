@@ -1,0 +1,28 @@
+.circle-prefix {
+    &--warning::before {
+        background-color: var(--warning-color);
+    }
+
+    &--danger::before {
+        background-color: var(--danger-color);
+    }
+
+    &--success::before {
+        background-color: var(--success-color);
+    }
+
+    &--default::before {
+        background-color: var(--blue-color);
+    }
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        -moz-border-radius: 7.5px;
+        -webkit-border-radius: 7.5px;
+        border-radius: 7.5px;
+        margin-right: 8px;
+    }
+}

@@ -1,0 +1,34 @@
+.p-calendar {
+   
+    .p-inputtext::placeholder  {
+        color: var(--tertiary-color-dark-100);
+        font-weight: bold;
+    }
+
+    .p-inputtext  {
+        border: 1px solid var(--tertiary-color-light-100);
+
+        &:hover {
+            border: 1px solid var(--tertiary-color-light);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 0.2rem var(--tertiary-color-light);
+            border: 1px solid var(--tertiary-color-light) !important;
+        }
+    }
+
+    .p-button {
+        background-color: var(--tertiary-color-light-100);
+        border: 0;
+
+        &:enabled:hover, &:enabled:active  {
+            background: var(--tertiary-color-light);
+            border-color: var(--tertiary-color-light);
+        }
+    
+        &:focus {
+            box-shadow: 0 0 0 0.2rem var(--tertiary-color-light);
+        }
+    }
+}
