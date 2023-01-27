@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-app-bar app flat color="yt_white">
-      <v-app-bar-nav-icon color="yt_black"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        color="yt_black"
+        @click.stop="$emit('openSidebar')"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title class="d-flex align-center">
         <img
           src="@/assets/logo.svg"
@@ -33,7 +36,9 @@
         outlined
       ></v-autocomplete>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" outlined rounded color="yt_blue"><v-icon class="mr-2">mdi-account-circle-outline</v-icon> Fazer login </v-btn>
+      <v-btn class="ma-2" outlined rounded color="yt_blue"
+        ><v-icon class="mr-2">mdi-account-circle-outline</v-icon> Fazer login
+      </v-btn>
     </v-app-bar>
   </div>
 </template>
