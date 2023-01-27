@@ -34,9 +34,9 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .sidebar {
   position: sticky;
-  top: 74px;
+  top: 64px !important;
 }
 </style>

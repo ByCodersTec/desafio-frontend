@@ -10,9 +10,15 @@ export const listVideos = async () => {
 };
 
 export const listChannels = async (id) => {
-    const { data } = await apiInstance.get(
-      `channels?key=${key}&part=snippet&id=${id}`
-    );
-    return data;
-  };
-  
+  const { data } = await apiInstance.get(
+    `channels?key=${key}&part=snippet&id=${id}`
+  );
+  return data;
+};
+
+export const listSearch = async (search) => {
+  const { data } = await apiInstance.get(
+    `search?key=${key}&part=snippet&q=${search}&maxResults=12`
+  );
+  return data;
+};

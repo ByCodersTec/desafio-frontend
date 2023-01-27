@@ -20,6 +20,7 @@
         :items="items"
         :search-input.sync="search"
         @click.clear="clearSearch"
+        @input="goToResults"
         class="mx-4"
         dense
         flat
@@ -66,6 +67,9 @@ export default {
     clearSearch() {
       const itens =  ["teste 1", "teste 2", "teste 3"]
       this.items = itens
+    },
+    goToResults() {
+      this.$router.push({name: 'SearchResult', query: { search_query: this.select } })
     }
   }
 };
