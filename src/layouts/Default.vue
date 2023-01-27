@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header @openSidebar="sidebar = !sidebar" />
-    <div>
+    <div class="layout">
       <SideBarNavegation :sidebar="sidebar" />
       <v-container fluid class="pa-4">
         <router-view />
