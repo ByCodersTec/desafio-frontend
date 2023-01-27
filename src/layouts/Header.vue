@@ -19,14 +19,13 @@
         :loading="loading"
         :items="items"
         :search-input.sync="search"
-        cache-items
+        @click.clear="clearSearch"
         class="mx-4"
         dense
         flat
         hide-no-data
         hide-details
         label="Pesquisar"
-        persistent-placeholder="true"
         placeholder="Pesquisar"
         solo
         rounded
@@ -34,6 +33,8 @@
         append-icon=""
         color="yt_black"
         outlined
+        :clearable="true"
+        :auto-select-first="true"
       ></v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn class="ma-2" outlined rounded color="yt_blue"
@@ -46,5 +47,26 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      items: ["teste 1", "teste 2", "teste 3"],
+      select: '',
+      search: '',
+      loading: false
+    }
+  },
+  watch: {
+    search() {
+      if(this.search != '') {
+        this.items.unshift(this.search)
+      }
+    }
+  },
+  methods: {
+    clearSearch() {
+      const itens =  ["teste 1", "teste 2", "teste 3"]
+      this.items = itens
+    }
+  }
 };
 </script>

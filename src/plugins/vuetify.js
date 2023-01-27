@@ -12,7 +12,7 @@ export default new Vuetify({
             yt_blue: "#065fd4",
             yt_black: "#0f0f0f",
             yt_gray: "#cccccc",
-            yt_ligth_gray: "rgba(0,0,0,0.5)",
+            yt_ligth_gray: "#F8F8F8",
             yt_white: "#ffffff"
           },
         },

@@ -1,9 +1,9 @@
 <template>
-    <v-navigation-drawer v-model="drawer" :mini-variant.sync="sidebar" clipped floating>
+    <v-navigation-drawer v-model="drawer" :mini-variant.sync="sidebar" clipped floating class="sidebar">
       <v-list dense>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="yt_black">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -27,12 +27,16 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "Home", icon: "mdi-home-city" },
-        { title: "My Account", icon: "mdi-account" },
-        { title: "Users", icon: "mdi-account-group-outline" },
+        { title: "Home", icon: "mdi-home" },
       ],
       mini: true,
     };
   },
 };
 </script>
+<style scoped>
+.sidebar {
+  position: sticky;
+  top: 74px;
+}
+</style>
