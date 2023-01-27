@@ -5,7 +5,7 @@
         color="yt_black"
         @click.stop="$emit('openSidebar')"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title class="d-flex align-center">
+      <v-toolbar-title class="d-flex align-center" @click="goToHome">
         <img
           src="@/assets/logo.svg"
           alt="Página inicial do YouTube"
@@ -64,6 +64,9 @@ export default {
     }
   },
   methods: {
+    goToHome() {
+      this.$router.push({name: 'Home', query: { search_query: this.select } })
+    },
     clearSearch() {
       const itens =  ["teste 1", "teste 2", "teste 3"]
       this.items = itens

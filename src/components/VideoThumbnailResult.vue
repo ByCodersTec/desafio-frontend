@@ -44,9 +44,12 @@ export default {
     margin-bottom: 6px;
   }
   .video-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0px;
     .channel {
       display: flex;
-      justify-content: start;
       align-items: center;
       gap: 8px;
       .channel-thumbnail {
@@ -56,6 +59,9 @@ export default {
       p {
         margin: 0;
       }
+    }
+    p {
+      font-size: 13px;
     }
   }
 }
