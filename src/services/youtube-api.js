@@ -1,6 +1,6 @@
 import { apiInstance } from "@/utils/api-instance";
 
-const key = "AIzaSyBVT81d3-k_-QQ_-7ARIJpyJV7sd7nhk7I";
+const key = process.env.VUE_APP_YOUTUBE_API_KEY
 
 export const listVideos = async () => {
   const { data } = await apiInstance.get(
