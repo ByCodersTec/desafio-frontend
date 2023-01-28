@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="col-12 d-flex p-5">
-        <p>Bem vindo ao projeto</p>
+        <p>Página não encontrada</p>
     </div>
   </div>
 </template>
