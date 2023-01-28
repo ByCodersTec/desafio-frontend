@@ -4,19 +4,18 @@
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
-        class="rounded-lg"
         width="100%"
       />
-      <div class="d-flex justify-start align-start">
+      <div class="d-flex justify-start align-start pa-3">
         <img
           :src="video.channel.snippet.thumbnails.default.url"
           :alt="video.channel.snippet.title"
           class="rounded-circle mr-3"
-          width="36px"
+          width="40px"
         />
         <div>
-          <h4>{{ video.snippet.title }}</h4>
-          <span>{{ video.channel.snippet.title }}</span>
+          <h4 class="body-2">{{ video.snippet.title }}</h4>
+          <span class="caption">{{ video.channel.snippet.title }}</span>
         </div>
       </div>
     </div>
@@ -25,7 +24,7 @@
 
 <script>
 export default {
-  name: "VideoThumbnail",
+  name: "VideoMobileVideoThumbnail",
   props: {
     videos: {
       type: Array,

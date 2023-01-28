@@ -3,7 +3,7 @@
     <Header @openSidebar="sidebar = !sidebar" :isMobile="isMobile" />
     <div class="layout">
       <SideBarNavegation v-if="!isMobile" :sidebar="sidebar" />
-      <v-container fluid class="pa-4 mb-12">
+      <v-container fluid :class="['pa-4 mb-12', {'px-0': isMobile}]">
         <router-view />
       </v-container>
     </div>
@@ -15,7 +15,7 @@
 import Header from "../layouts/Header.vue";
 import SideBarNavegation from "../layouts/SideBarNavegation.vue";
 import BottomBarNavegation from "../layouts/BottomBarNavegation.vue";
-
+import { mapActions } from "vuex";
 export default {
   components: { Header, SideBarNavegation, BottomBarNavegation },
   name: "Default",
@@ -26,11 +26,18 @@ export default {
     };
   },
   mounted() {
-    const vue = this;
-    window.addEventListener("resize", () => {
-      vue.isMobile = window.innerWidth <= 768;
-    });
-    vue.isMobile = window.innerWidth <= 768;
+    this.checkIsMobile();
+  },
+  methods: {
+    ...mapActions(["setIsMobile"]),
+    checkIsMobile() {
+      window.addEventListener("resize", () => {
+        this.isMobile = window.innerWidth <= 768;
+        this.setIsMobile(this.isMobile)
+      });
+      this.isMobile = window.innerWidth <= 768;
+      this.setIsMobile(this.isMobile)
+    },
   },
 };
 </script>

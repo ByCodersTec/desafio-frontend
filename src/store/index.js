@@ -8,7 +8,8 @@ Vue.use(VueCookies)
 export default new Vuex.Store({
   state: {
     search: '',
-    searchHistory: Vue.$cookies.get('searchHistory') != undefined ? Vue.$cookies.get('searchHistory') : []
+    searchHistory: Vue.$cookies.get('searchHistory') != undefined ? Vue.$cookies.get('searchHistory') : [],
+    isMobile: false
   },
   mutations: {
     SET_SEARCH_PARAMS(state, value) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
       state.searchHistory.unshift(value)
       const history = JSON.stringify(state.searchHistory)
       Vue.$cookies.set('searchHistory', history);
+    },
+    SET_MOBILE_SCREEN(state, value) {
+      state.isMobile = value
     }
   },
   actions: {
@@ -26,6 +30,9 @@ export default new Vuex.Store({
     },
     setSearchHistory({commit}, search) {
       commit('SET_SEARCH_HISTORY_PARAMS', search)
+    },
+    setIsMobile({commit}, value) {
+      commit('SET_MOBILE_SCREEN', value)
     }
   },
   modules: {

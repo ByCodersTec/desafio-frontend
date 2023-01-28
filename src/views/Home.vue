@@ -8,16 +8,20 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <VideoThumbnail v-else :videos="videos" class="videos" />
+    <div v-else>
+      <VideoMobileVideoThumbnail v-if="isMobile" :videos="videos" class="videos" />
+      <VideoThumbnail v-else :videos="videos" class="videos" />
+    </div>
   </div>
 </template>
 
 <script>
+import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnail from "@/components/VideoThumbnail.vue";
 import { listVideos, listChannels } from "@/services/youtube-api.js";
 export default {
   name: "Home",
-  components: { VideoThumbnail },
+  components: { VideoThumbnail, VideoMobileVideoThumbnail },
   data() {
     return {
       videos: [
@@ -691,6 +695,11 @@ export default {
       return channel;
     },
   },
+  computed: {
+    isMobile() {
+      return this.$store.state.isMobile
+    }
+  }
 };
 </script>
 
@@ -706,7 +715,7 @@ export default {
     max-width: 100%;
     width: 100%;
     margin: 0 auto;
-    @media screen and (min-width: 680px) {
+    @media screen and (min-width: 800px) {
       grid-template-columns: repeat(2, 1fr);
     }
     @media screen and (min-width: 900px) {
