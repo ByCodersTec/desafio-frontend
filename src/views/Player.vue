@@ -249,7 +249,7 @@ export default {
   width: 100%;
   margin: 0 auto;
   gap: 32px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1080px) {
     grid-template-columns: 1fr;
   }
   @media screen and (max-width: 1280px) {

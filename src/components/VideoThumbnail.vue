@@ -15,8 +15,8 @@
           width="36px"
         />
         <div>
-          <h4>{{ video.snippet.title }}</h4>
-          <span>{{ video.channel.snippet.title }}</span>
+          <h4>{{ truncateString(video.snippet.title, 50) }}</h4>
+          <span class="caption">{{ video.channel.snippet.title }}</span>
         </div>
       </div>
     </div>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {truncateString} from "@/utils/filters.js"
 export default {
   name: "VideoThumbnail",
   props: {
@@ -31,5 +32,8 @@ export default {
       type: Array,
     },
   },
+  methods: {
+    truncateString,
+  }
 };
 </script>

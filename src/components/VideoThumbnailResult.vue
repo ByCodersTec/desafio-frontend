@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-for="video in videos" :key="video.id.videoId" class="d-flex justify-start align-start">
+    <div
+      v-for="video in videos"
+      :key="video.id.videoId"
+      class="d-flex justify-start align-start"
+    >
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
@@ -12,24 +16,28 @@
           <img
             :src="video.channel.snippet.thumbnails.default.url"
             :alt="video.channel.snippet.title"
-            class="rounded mr-3"
+            class="rounded-circle mr-3"
             width="40"
           />
           <span class="text-caption">{{ video.channel.snippet.title }}</span>
         </div>
-        <p class="text-caption">{{ video.snippet.description }}</p>
+        <p class="text-caption">{{ truncateString(video.snippet.description, 125) }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { truncateString } from "@/utils/filters.js";
 export default {
   name: "VideoThumbnailResult",
   props: {
     videos: {
       type: Array,
     },
+  },
+  methods: {
+    truncateString,
   },
 };
 </script>

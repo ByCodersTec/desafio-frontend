@@ -10,20 +10,20 @@
     :stateless="true"
   >
     <v-list dense>
-      <v-list-item
-        v-for="item in items"
-        :key="item.title"
-        link
-        @click="goTo(item.route)"
-      >
-        <v-list-item-icon>
-          <v-icon color="yt_black">{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          @click="goTo(item.route)"
+        >
+          <v-list-item-icon>
+            <v-icon :color="checkRoute(item.route)">{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+          <v-list-item-content>
+            <v-list-item-title :class="[checkRoute(item.route) + '--text']">{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -35,6 +35,7 @@ export default {
     sidebar: {
       type: Boolean,
       required: true,
+      selectedItem: 0
     },
   },
   data() {
@@ -48,6 +49,9 @@ export default {
     goTo(route) {
       this.$router.push({ name: route });
     },
+    checkRoute(name) {
+      return name == this.$route.name ? 'yt_black' : 'yt_gray'
+    }
   },
 };
 </script>

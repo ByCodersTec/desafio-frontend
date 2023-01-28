@@ -9,6 +9,8 @@
       ></v-progress-circular>
     </div>
     <div v-else>
+      <h4 class="body-1">Resultado da busca</h4>
+      <v-divider class="mb-6 mt-3"></v-divider>
       <VideoMobileVideoThumbnail
         v-if="isMobile"
         :videos="videos"

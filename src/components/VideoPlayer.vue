@@ -17,12 +17,12 @@
           :src="video.channel.snippet.thumbnails.default.url"
           :alt="video.channel.snippet.title"
           width="40"
-          class="mr-3"
+          class="mr-3 rouned-circle"
         />
         <div class="d-flex justify-center flex-column">
           <h4>{{ video.channel.snippet.title }}</h4>
           <p class="mb-0 text-caption">
-            {{ video.channel.statistics.subscriberCount }}
+            {{ formatCountSubscribed(video.channel.statistics.subscriberCount) }} inscritos
           </p>
         </div>
       </div>
@@ -34,10 +34,14 @@
 </template>
 
 <script>
+import {formatCountSubscribed} from "@/utils/filters.js"
 export default {
   name: "VideoPlayer",
   props: {
     video: Object,
+  },
+  methods: {
+    formatCountSubscribed
   },
   computed: {
     description() {
