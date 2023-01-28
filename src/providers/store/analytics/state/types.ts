@@ -3,8 +3,12 @@ import { CommitOptions, DispatchOptions, Store as VuexStore } from "vuex";
 import { AnalyticsMutations } from "@providers/store/analytics/mutations";
 import { AnalyticsGetters } from "@providers/store/analytics/getters";
 import { AnalyticsActions } from "@providers/store/analytics/actions";
+import { VideoList } from "@modules/google";
 
-export interface AnalyticsState {}
+export interface AnalyticsState {
+  homePageVideos: VideoList[]
+  tecnologyVideos: VideoList[]
+}
 
 export type Store<S = AnalyticsState> = Omit<
   VuexStore<S>,
