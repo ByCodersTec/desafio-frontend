@@ -19,7 +19,13 @@ const routes = [
         path: "/results",
         name: "SearchResult",
         component: () =>
-          import(/* webpackChunkName: "home" */ "../views/SearchResult.vue"),
+          import(/* webpackChunkName: "home" */ "../views/Player.vue"),
+      },
+      {
+        path: "/watch",
+        name: "Player",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/Player.vue"),
       },
     ]
   }

@@ -72,7 +72,6 @@ export default {
   mounted() {
     const history = []
     this.items = history.concat(this.$store.state.searchHistory)
-    console.log(this.selected)
   },
   methods: {
     ...mapActions(['setSearch', 'setSearchHistory']),
