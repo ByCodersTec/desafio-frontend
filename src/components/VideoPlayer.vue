@@ -10,7 +10,7 @@
         allow="autoplay"
       />
     </div>
-    <div :class="[{'px-4': isMobile}]">
+    <div :class="[{ 'px-4': isMobile }]">
       <h3 class="my-3">{{ video.snippet.title }}</h3>
       <div class="d-flex justify-start align-center">
         <img
@@ -22,26 +22,40 @@
         <div class="d-flex justify-center flex-column">
           <h4>{{ video.channel.snippet.title }}</h4>
           <p class="mb-0 text-caption">
-            {{ formatCountSubscribed(video.channel.statistics.subscriberCount) }} inscritos
+            {{
+              formatCountSubscribed(video.channel.statistics.subscriberCount)
+            }}
+            inscritos
           </p>
         </div>
       </div>
     </div>
     <div class="pa-6 mt-3 yt_ligth_gray rounded-lg">
-      <p v-html="description"></p>
+      <div>
+        <p v-if="!readMoreActivated" v-html="description.slice(0, 200) + '...'"></p>
+        <p v-else v-html="description"></p>
+        <div class="d-flex justify-center">
+          <v-icon @click="readMoreActivated = !readMoreActivated"> {{readMoreActivated ? 'mdi-chevron-up' : 'mdi-chevron-down'}} </v-icon>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {formatCountSubscribed} from "@/utils/filters.js"
+import { formatCountSubscribed } from "@/utils/filters.js";
 export default {
   name: "VideoPlayer",
   props: {
     video: Object,
   },
+  data() {
+    return {
+      readMoreActivated: false,
+    };
+  },
   methods: {
-    formatCountSubscribed
+    formatCountSubscribed,
   },
   computed: {
     description() {

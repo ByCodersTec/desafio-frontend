@@ -7,8 +7,8 @@ export const truncateString = (str, num) => {
 
 export const formatCountSubscribed = (str) => {
   if (str.length > 6) {
-    return str.slice(0, str.length - 6) + "mi";
+    return str.slice(0, str.length - 6) + "." + str.slice(0, str.length - 3) + "." + str.slice(str.length - 3, str.length);
   } else if (str.length > 3) {
-    return str.slice(0, str.length - 3) + " mil";
+    return str.slice(0, str.length - 3) + "." + str.slice(str.length - 3, str.length);
   }
 };
