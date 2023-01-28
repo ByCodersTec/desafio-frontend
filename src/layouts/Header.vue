@@ -15,7 +15,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-autocomplete
-        v-model="select"
+        v-model="selected"
         :loading="loading"
         :items="items"
         :search-input.sync="search"
@@ -46,12 +46,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "Header",
   data() {
     return {
-      items: ["teste 1", "teste 2", "teste 3"],
-      select: '',
+      items: [],
+      selected: '',
       search: '',
       loading: false
     }
@@ -61,19 +62,44 @@ export default {
       if(this.search != '') {
         this.items.unshift(this.search)
       }
-    }
+    },
+    query() {
+      if(!this.$route.query.search_query) {
+        this.selected = ''
+      }
+    },
+  },
+  mounted() {
+    const history = []
+    this.items = history.concat(this.$store.state.searchHistory)
+    console.log(this.selected)
   },
   methods: {
+    ...mapActions(['setSearch', 'setSearchHistory']),
     goToHome() {
       this.$router.push({name: 'Home', query: { search_query: this.select } })
     },
     clearSearch() {
-      const itens =  ["teste 1", "teste 2", "teste 3"]
-      this.items = itens
+      const history = []
+      this.items = history.concat(this.$store.state.searchHistory)
     },
     goToResults() {
-      this.$router.push({name: 'SearchResult', query: { search_query: this.select } })
+      if(this.selected != null) {
+        this.setSearch(this.selected)
+        if(this.selected != this.$store.state.searchHistory.find(element => element === this.selected)) {
+          this.setSearchHistory(this.selected)
+        }
+        this.items.unshift(this.selected)
+        if(this.$router.name != 'SearchResult') {
+          this.$router.push({name: 'SearchResult', query: { search_query: this.$store.state.search } })
+        }
+      }
     }
-  }
+  },
+  computed: {
+    query() {
+      return this.$route.query.search_query;
+    },
+  },
 };
 </script>
