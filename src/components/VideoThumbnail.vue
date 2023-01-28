@@ -4,17 +4,19 @@
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
-        class="thumbnail"
+        class="rounded-lg"
+        width="100%"
       />
-      <div class="video-info">
+      <div class="d-flex justify-start align-start">
         <img
           :src="video.channel.snippet.thumbnails.default.url"
           :alt="video.channel.snippet.title"
-          class="channel-thumbnail"
+          class="rounded mr-3"
+          width="36px"
         />
         <div>
-          <h3>{{ video.snippet.title }}</h3>
-          <p>{{ video.channel.snippet.title }}</p>
+          <h4>{{ video.snippet.title }}</h4>
+          <span>{{ video.channel.snippet.title }}</span>
         </div>
       </div>
     </div>
@@ -31,21 +33,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.video {
-  .thumbnail {
-    border-radius: 10px;
-    margin-bottom: 6px;
-  }
-  .video-info {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 16px;
-    .channel-thumbnail {
-      border-radius: 50%;
-      width: 36px;
-    }
-  }
-}
-</style>

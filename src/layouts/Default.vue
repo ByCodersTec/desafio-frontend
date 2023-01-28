@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Header @openSidebar="sidebar = !sidebar" />
+    <Header @openSidebar="sidebar = !sidebar" :isMobile="isMobile" />
     <div class="layout">
-      <SideBarNavegation :sidebar="sidebar" />
+      <SideBarNavegation v-if="!isMobile" :sidebar="sidebar" />
       <v-container fluid class="pa-4">
         <router-view />
       </v-container>
@@ -20,7 +20,15 @@ export default {
   data() {
     return {
       sidebar: false,
+      isMobile: false,
     };
+  },
+  mounted() {
+    const vue = this;
+    window.addEventListener("resize", () => {
+      vue.isMobile = window.innerWidth <= 768;
+    });
+    vue.isMobile = window.innerWidth <= 768;
   },
 };
 </script>

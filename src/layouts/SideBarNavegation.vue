@@ -5,6 +5,9 @@
     clipped
     floating
     class="sidebar"
+    mobile-breakpoint="768"
+    :disable-resize-watcher="true"
+    :stateless="true"
   >
     <v-list dense>
       <v-list-item
@@ -51,6 +54,6 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   position: sticky;
-  top: 64px !important;
+  top: 56px !important;
 }
 </style>

@@ -2,6 +2,7 @@
   <div>
     <v-app-bar app flat color="yt_white">
       <v-app-bar-nav-icon
+        v-if="!isMobile"
         color="yt_black"
         @click.stop="$emit('openSidebar')"
       ></v-app-bar-nav-icon>
@@ -21,7 +22,6 @@
         :search-input.sync="search"
         @click.clear="clearSearch"
         @input="goToResults"
-        class="mx-4"
         dense
         flat
         hide-no-data
@@ -37,63 +37,77 @@
         :clearable="true"
         :auto-select-first="true"
       ></v-autocomplete>
-      <v-spacer></v-spacer>
-      <v-btn class="ma-2" outlined rounded color="yt_blue"
-        ><v-icon class="mr-2">mdi-account-circle-outline</v-icon> Fazer login
+      <v-spacer v-if="!isMobile"></v-spacer>
+      <v-btn v-if="!isMobile" class="ma-2" outlined rounded color="yt_blue"
+        ><v-icon>mdi-account-circle-outline</v-icon
+        ><span class="ml-2">Fazer login</span>
       </v-btn>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "Header",
   data() {
     return {
       items: [],
-      selected: '',
-      search: '',
-      loading: false
-    }
+      selected: "",
+      search: "",
+      loading: false,
+    };
+  },
+  props: {
+    isMobile: {
+      type: Boolean,
+    },
   },
   watch: {
     search() {
-      if(this.search != '') {
-        this.items.unshift(this.search)
+      if (this.search != "") {
+        this.items.unshift(this.search);
       }
     },
     query() {
-      if(!this.$route.query.search_query) {
-        this.selected = ''
+      if (!this.$route.query.search_query) {
+        this.selected = "";
       }
     },
   },
   mounted() {
-    const history = []
-    this.items = history.concat(this.$store.state.searchHistory)
+    const history = [];
+    this.items = history.concat(this.$store.state.searchHistory);
   },
   methods: {
-    ...mapActions(['setSearch', 'setSearchHistory']),
+    ...mapActions(["setSearch", "setSearchHistory"]),
     goToHome() {
-      this.$router.push({name: 'Home', query: { search_query: this.select } })
+      this.$router.push({ name: "Home", query: { search_query: this.select } });
     },
     clearSearch() {
-      const history = []
-      this.items = history.concat(this.$store.state.searchHistory)
+      const history = [];
+      this.items = history.concat(this.$store.state.searchHistory);
     },
     goToResults() {
-      if(this.selected != null) {
-        this.setSearch(this.selected)
-        if(this.selected != this.$store.state.searchHistory.find(element => element === this.selected)) {
-          this.setSearchHistory(this.selected)
+      if (this.selected != null) {
+        this.setSearch(this.selected);
+        if (
+          this.selected !=
+          this.$store.state.searchHistory.find(
+            (element) => element === this.selected
+          )
+        ) {
+          this.setSearchHistory(this.selected);
         }
-        this.items.unshift(this.selected)
-        if(this.$router.name != 'SearchResult') {
-          this.$router.push({name: 'SearchResult', query: { search_query: this.$store.state.search } })
+        this.items.unshift(this.selected);
+        if (this.$router.name != "SearchResult") {
+          this.$router.push({
+            name: "SearchResult",
+            query: { search_query: this.$store.state.search },
+          });
         }
       }
-    }
+    },
   },
   computed: {
     query() {
