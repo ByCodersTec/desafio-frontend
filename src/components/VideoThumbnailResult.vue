@@ -3,7 +3,8 @@
     <div
       v-for="video in videos"
       :key="video.id.videoId"
-      class="d-flex justify-start align-start"
+      class="d-flex justify-start align-start mb-3"
+      @click="goToPlayer(video.id.videoId)"
     >
       <img
         :src="video.snippet.thumbnails.medium.url"
@@ -21,7 +22,9 @@
           />
           <span class="text-caption">{{ video.channel.snippet.title }}</span>
         </div>
-        <p class="text-caption">{{ truncateString(video.snippet.description, 125) }}</p>
+        <p class="text-caption">
+          {{ truncateString(video.snippet.description, 125) }}
+        </p>
       </div>
     </div>
   </div>
@@ -38,6 +41,13 @@ export default {
   },
   methods: {
     truncateString,
+    goToPlayer(id) {
+      console.log(id)
+      this.$router.push({
+        name: "Player",
+        query: { v: id },
+      });
+    },
   },
 };
 </script>

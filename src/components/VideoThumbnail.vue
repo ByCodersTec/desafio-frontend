@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="video in videos" :key="video.id" class="video">
+    <div v-for="video in videos" :key="video.id" class="video" @click="goToPlayer(video.id)">
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
@@ -17,6 +17,12 @@
         <div>
           <h4>{{ truncateString(video.snippet.title, 50) }}</h4>
           <span class="caption">{{ video.channel.snippet.title }}</span>
+          <p class="caption ma-0">
+            {{
+              formatCountSubscribed(video.statistics.viewCount) +
+              " visulizações"
+            }}
+          </p>
         </div>
       </div>
     </div>
@@ -24,7 +30,7 @@
 </template>
 
 <script>
-import {truncateString} from "@/utils/filters.js"
+import { truncateString, formatCountSubscribed } from "@/utils/filters.js";
 export default {
   name: "VideoThumbnail",
   props: {
@@ -34,6 +40,13 @@ export default {
   },
   methods: {
     truncateString,
-  }
+    formatCountSubscribed,
+    goToPlayer(id) {
+      this.$router.push({
+        name: "Player",
+        query: { v: id },
+      });
+    },
+  },
 };
 </script>

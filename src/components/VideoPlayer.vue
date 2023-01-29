@@ -17,7 +17,7 @@
           :src="video.channel.snippet.thumbnails.default.url"
           :alt="video.channel.snippet.title"
           width="40"
-          class="mr-3 rouned-circle"
+          class="mr-3 rounded-circle"
         />
         <div class="d-flex justify-center flex-column">
           <h4>{{ video.channel.snippet.title }}</h4>
@@ -25,14 +25,14 @@
             {{
               formatCountSubscribed(video.channel.statistics.subscriberCount)
             }}
-            inscritos
+            de inscritos
           </p>
         </div>
       </div>
     </div>
     <div class="pa-6 mt-3 yt_ligth_gray rounded-lg">
       <div>
-        <p v-if="!readMoreActivated" v-html="description.slice(0, 200) + '...'"></p>
+        <p v-if="!readMoreActivated" v-html="description.slice(0, 150) + '...'"></p>
         <p v-else v-html="description"></p>
         <div class="d-flex justify-center">
           <v-icon @click="readMoreActivated = !readMoreActivated"> {{readMoreActivated ? 'mdi-chevron-up' : 'mdi-chevron-down'}} </v-icon>

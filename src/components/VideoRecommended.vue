@@ -6,6 +6,7 @@
       v-for="video in videos"
       :key="video.id.videoId"
       class="d-flex justify-start align-start mb-3"
+      @click="goToPlayer(video.id)"
     >
       <img
         :src="video.snippet.thumbnails.medium.url"
@@ -31,6 +32,12 @@ export default {
   },
   methods: {
     truncateString,
+    goToPlayer(id) {
+      this.$router.push({
+        name: "Player",
+        query: { v: id },
+      });
+    },
   },
 };
 </script>

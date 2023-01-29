@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-for="video in videos" :key="video.id" class="video">
+    <div
+      v-for="video in videos"
+      :key="$route.name === 'SearchResult' ? video.id.videoId : video.id"
+      class="mb-3"
+      @click="goToPlayer($route.name === 'SearchResult' ? video.id.videoId : video.id)"
+    >
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
@@ -28,6 +33,14 @@ export default {
   props: {
     videos: {
       type: Array,
+    },
+  },
+  methods: {
+    goToPlayer(id) {
+      this.$router.push({
+        name: "Player",
+        query: { v: id },
+      });
     },
   },
 };
