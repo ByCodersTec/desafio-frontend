@@ -4,7 +4,7 @@ const key = process.env.VUE_APP_YOUTUBE_API_KEY
 
 export const listVideos = async () => {
   const { data } = await apiInstance.get(
-    `videos?key=${key}&part=snippet,statistics&chart=mostPopular&maxResults=12`
+    `videos?key=${key}&part=snippet,statistics&chart=mostPopular&maxResults=12&type=video`
   );
   return data;
 };
@@ -16,9 +16,9 @@ export const listChannels = async (id) => {
   return data;
 };
 
-export const listSearch = async (search) => {
+export const listSearch = async (search, nextPageToken = '') => {
   const { data } = await apiInstance.get(
-    `search?key=${key}&part=snippet&q=${search}&maxResults=12`
+    `search?key=${key}&part=snippet&q=${search}&maxResults=5&pageToken=${nextPageToken}&type=video`
   );
   return data;
 };

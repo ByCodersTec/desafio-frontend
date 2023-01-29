@@ -19,6 +19,13 @@
         class="videos"
       />
       <VideoThumbnailResult v-else :videos="videos" class="videos" />
+      <div v-if="nextPageToken" class="d-flex justify-center">
+        <v-icon
+          @click="getNextVideos($route.query.search_query, nextPageToken)"
+          class="mx-auto"
+          >mdi-chevron-down</v-icon
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +42,7 @@ export default {
     return {
       search: "",
       videos: [],
+      nextPageToken: "",
       loading: false,
     };
   },
@@ -47,11 +55,35 @@ export default {
       try {
         this.loading = true;
         const data = await listSearch(search);
+        this.nextPageToken = data.nextPageToken;
         data.items.map(async (video) => {
           const channel = await this.getChannelThumb(video.snippet.channelId);
           video.channel = channel.items[0];
           this.videos.push(video);
         });
+      } catch {
+        this.loading = false;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getNextVideos(search, token) {
+      try {
+        const data = await listSearch(search, token);
+        this.nextPageToken = data.nextPageToken;
+        data.items.map(async (video) => {
+          let idVideo = {};
+          idVideo = this.videos.find(
+            (element) => element.id.videoId === video.id.videoId
+          );
+          console.log(idVideo);
+          // if (!idVideo) {
+          //   const channel = await this.getChannelThumb(video.snippet.channelId);
+          //   video.channel = channel.items[0];
+          //   this.videos.push(video);
+          // }
+        });
+        console.log(this.videos);
       } catch {
         this.loading = false;
       } finally {
@@ -68,7 +100,7 @@ export default {
       const newVideos = [];
       this.videos = newVideos;
       await this.getVideos(this.$route.query.search_query);
-      await this.setTitlePage(this.$route.query.search_query + ' - YouTube')
+      await this.setTitlePage(this.$route.query.search_query + " - YouTube");
     },
   },
   computed: {
