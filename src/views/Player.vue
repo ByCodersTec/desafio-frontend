@@ -25,6 +25,7 @@ import {
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import VideoRecommended from "@/components/VideoRecommended.vue";
+import { mapActions } from "vuex";
 export default {
   name: "Player",
   components: { VideoPlayer, VideoMobileVideoThumbnail, VideoRecommended },
@@ -39,6 +40,7 @@ export default {
     this.getVideoPlayer();
   },
   methods: {
+    ...mapActions(["setWatchedHistory"]),
     async getVideoPlayer() {
       try {
         this.loading = true;
@@ -48,6 +50,7 @@ export default {
           this.video.snippet.channelId
         );
         this.video.channel = channel.items[0];
+        this.setHistory(this.video);
         const dataRecommended = await listVideosRecommended(
           this.video.snippet.categoryId
         );
@@ -65,6 +68,14 @@ export default {
     getChannelThumb(id) {
       const channel = listChannels(id);
       return channel;
+    },
+    setHistory(video) {
+      const historyVideo = this.$store.state.watchedVideos.find(
+        (element) => element === video.id
+      );
+      if (video.id != historyVideo) {
+        this.setWatchedHistory(video.id);
+      }
     },
   },
   watch: {

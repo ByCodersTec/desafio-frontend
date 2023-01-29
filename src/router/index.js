@@ -27,6 +27,12 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "home" */ "../views/Player.vue"),
       },
+      {
+        path: "/history",
+        name: "History",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/History.vue"),
+      },
     ]
   }
 ]

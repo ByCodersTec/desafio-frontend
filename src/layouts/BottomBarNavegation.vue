@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-1 yt_white bottom-bar">
+  <div class="pa-1 yt_white bottom-bar d-flex align-center justify-space-around">
     <div
       v-for="item in items"
       :key="item.title"
@@ -18,7 +18,8 @@ export default {
   name: "BottomBarNavegation",
   data() {
     return {
-      items: [{ title: "Home", icon: "mdi-home", route: "Home" }],
+      items: [{ title: "Home", icon: "mdi-home", route: "Home" },
+      { title: "Histórico", icon: "mdi-history", route: "History" }],
     };
   },
   methods: {

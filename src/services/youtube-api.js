@@ -36,3 +36,10 @@ export const listVideosRecommended = async (id) => {
   );
   return data;
 };
+
+export const getVideosHistory = async (id) => {
+  const { data } = await apiInstance.get(
+    `videos?key=${key}&part=snippet,statistics&id=${id}`
+  );
+  return data;
+};

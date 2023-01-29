@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     search: '',
     searchHistory: Vue.$cookies.get('searchHistory') != undefined ? Vue.$cookies.get('searchHistory') : [],
+    watchedVideos: Vue.$cookies.get('history') != undefined ? Vue.$cookies.get('history') : [],
     isMobile: false
   },
   mutations: {
@@ -22,6 +23,11 @@ export default new Vuex.Store({
     },
     SET_MOBILE_SCREEN(state, value) {
       state.isMobile = value
+    },
+    SET_VIDEOS_WATCHED_HISTORY(state, value) {
+      state.watchedVideos.unshift(value)
+      const history = JSON.stringify(state.watchedVideos)
+      Vue.$cookies.set('history', history);
     }
   },
   actions: {
@@ -33,6 +39,9 @@ export default new Vuex.Store({
     },
     setIsMobile({commit}, value) {
       commit('SET_MOBILE_SCREEN', value)
+    },
+    setWatchedHistory({commit}, value) {
+      commit('SET_VIDEOS_WATCHED_HISTORY', value)
     }
   },
   modules: {
