@@ -12,6 +12,7 @@
           alt="Página inicial do YouTube"
           height="20px"
           width="90px"
+          class="logo"
         />
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -36,6 +37,7 @@
         outlined
         :clearable="true"
         :auto-select-first="true"
+        class="search-input"
       ></v-autocomplete>
       <v-spacer v-if="!isMobile"></v-spacer>
       <v-btn v-if="!isMobile" class="ma-2" outlined rounded color="yt_blue"
@@ -82,7 +84,12 @@ export default {
   methods: {
     ...mapActions(["setSearch", "setSearchHistory"]),
     goToHome() {
-      this.$router.push({ name: "Home", query: { search_query: this.select } });
+      if (this.$route.name != "Home") {
+        this.$router.push({
+          name: "Home",
+          query: { search_query: this.select },
+        });
+      }
     },
     clearSearch() {
       const history = [];
@@ -116,3 +123,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.logo {
+  cursor: pointer;
+}
+@media screen and (max-width: 400px) {
+  .search-input {
+    max-width: 170px;
+  }
+}
+</style>

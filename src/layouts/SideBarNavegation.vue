@@ -52,7 +52,9 @@ export default {
   },
   methods: {
     goTo(route) {
-      this.$router.push({ name: route });
+      if (this.$route.name != route) {
+        this.$router.push({ name: route });
+      }
     },
     checkRoute(name) {
       return name == this.$route.name ? "yt_black" : "yt_gray";
