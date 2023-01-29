@@ -13,17 +13,20 @@
         <h4 class="body-1">Histórico de exibição</h4>
         <v-divider class="mb-6 mt-3"></v-divider>
       </div>
-      <VideoMobileVideoThumbnail
-        v-if="isMobile"
-        :videos="videos"
-      />
+      <VideoMobileVideoThumbnail v-if="isMobile" :videos="videos" />
       <VideoThumbnailResult v-else :videos="videos" />
+      <ErrorMessage
+        v-if="error"
+        @tryAgain="getVideos"
+        :message="errorMessage"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { getVideosHistory, listChannels } from "@/services/youtube-api.js";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
 import { mapActions } from "vuex";
@@ -31,17 +34,20 @@ export default {
   name: "History",
   components: {
     VideoThumbnailResult,
-    VideoMobileVideoThumbnail
+    VideoMobileVideoThumbnail,
+    ErrorMessage,
   },
   data() {
     return {
       videos: [],
       loading: false,
+      error: false,
+      errorMessage: "",
     };
   },
   mounted() {
     this.getVideos();
-    this.setTitlePage('Histórico - YouTube')
+    this.setTitlePage("Histórico - YouTube");
   },
   methods: {
     ...mapActions(["setTitlePage"]),
@@ -54,8 +60,11 @@ export default {
           video.channel = channel.items[0];
           this.videos.push(video);
         });
-      } catch {
+        this.error = false;
+      } catch (error) {
+        this.error = true;
         this.loading = false;
+        this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
       }

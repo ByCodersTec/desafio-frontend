@@ -19,22 +19,26 @@
         class="videos"
       />
       <VideoThumbnail v-else :videos="videos" class="videos" />
+      <ErrorMessage v-if="error" @tryAgain="getVideos" :message="errorMessage"/>
     </div>
   </div>
 </template>
 
 <script>
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnail from "@/components/VideoThumbnail.vue";
 import { listVideos, listChannels } from "@/services/youtube-api.js";
 import { mapActions } from "vuex";
 export default {
   name: "Home",
-  components: { VideoThumbnail, VideoMobileVideoThumbnail },
+  components: { VideoThumbnail, VideoMobileVideoThumbnail, ErrorMessage },
   data() {
     return {
       videos: [],
       loading: false,
+      error: false,
+      errorMessage: ''
     };
   },
   mounted() {
@@ -52,8 +56,11 @@ export default {
           video.channel = channel.items[0];
           this.videos.push(video);
         });
-      } catch {
+        this.error = false
+      } catch(error) {
+        this.error = true
         this.loading = false;
+        this.errorMessage = error.response.data.error.message
       } finally {
         this.loading = false;
       }
@@ -61,7 +68,7 @@ export default {
     getChannelThumb(id) {
       const channel = listChannels(id);
       return channel;
-    },
+    }
   },
   computed: {
     isMobile() {

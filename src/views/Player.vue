@@ -8,10 +8,17 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <div class="player" v-else>
-      <VideoPlayer v-if="checkChanell" :video="video" />
-      <VideoMobileVideoThumbnail v-if="isMobile" :videos="videoRecommended" />
-      <VideoRecommended v-else :videos="videoRecommended" />
+    <div v-else>
+      <ErrorMessage
+        v-if="error"
+        @tryAgain="getVideoPlayer"
+        :message="errorMessage"
+      />
+      <div class="player" v-else>
+        <VideoPlayer v-if="checkChanell" :video="video" />
+        <VideoMobileVideoThumbnail v-if="isMobile" :videos="videoRecommended" />
+        <VideoRecommended v-else :videos="videoRecommended" />
+      </div>
     </div>
   </div>
 </template>
@@ -22,18 +29,26 @@ import {
   listChannels,
   listVideosRecommended,
 } from "@/services/youtube-api.js";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import VideoRecommended from "@/components/VideoRecommended.vue";
 import { mapActions } from "vuex";
 export default {
   name: "Player",
-  components: { VideoPlayer, VideoMobileVideoThumbnail, VideoRecommended },
+  components: {
+    VideoPlayer,
+    VideoMobileVideoThumbnail,
+    VideoRecommended,
+    ErrorMessage,
+  },
   data() {
     return {
       video: {},
       videoRecommended: [],
       loading: false,
+      error: false,
+      errorMessage: "",
     };
   },
   mounted() {
@@ -46,7 +61,7 @@ export default {
         this.loading = true;
         const data = await getVideo(this.$route.query.v);
         this.video = data.items[0];
-        this.setTitlePage(this.video.snippet.title + ' - YouTube')
+        this.setTitlePage(this.video.snippet.title + " - YouTube");
         const channel = await this.getChannelThumb(
           this.video.snippet.channelId
         );
@@ -60,8 +75,11 @@ export default {
           video.channel = channel.items[0];
           this.videoRecommended.push(video);
         });
-      } catch {
+        this.error = false;
+      } catch (error) {
+        this.error = true;
         this.loading = false;
+        this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
       }

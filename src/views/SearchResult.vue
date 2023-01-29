@@ -19,10 +19,13 @@
         class="videos"
       />
       <VideoThumbnailResult v-else :videos="videos" class="videos" />
+      <ErrorMessage
+        v-if="error"
+        @tryAgain="getVideos($route.query.search_query)"
+        :message="errorMessage"
+      />
       <div v-if="nextPageToken" class="d-flex justify-center">
-        <v-icon
-          @click="getNextVideos($route.query.search_query, nextPageToken)"
-          class="mx-auto"
+        <v-icon @click="getNextVideos($route.query.search_query, nextPageToken)"
           >mdi-chevron-down</v-icon
         >
       </div>
@@ -31,19 +34,22 @@
 </template>
 
 <script>
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
 import { listSearch, listChannels } from "@/services/youtube-api.js";
 import { mapActions } from "vuex";
 export default {
   name: "SearchResult",
-  components: { VideoThumbnailResult, VideoMobileVideoThumbnail },
+  components: { VideoThumbnailResult, VideoMobileVideoThumbnail, ErrorMessage },
   data() {
     return {
       search: "",
       videos: [],
       nextPageToken: "",
       loading: false,
+      error: false,
+      errorMessage: "",
     };
   },
   mounted() {
@@ -61,8 +67,11 @@ export default {
           video.channel = channel.items[0];
           this.videos.push(video);
         });
-      } catch {
+        this.error = false;
+      } catch (error) {
+        this.error = true;
         this.loading = false;
+        this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
       }
@@ -84,8 +93,11 @@ export default {
           // }
         });
         console.log(this.videos);
-      } catch {
+        this.error = false;
+      } catch (error) {
+        this.error = true;
         this.loading = false;
+        this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
       }
