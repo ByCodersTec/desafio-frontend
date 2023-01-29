@@ -10,6 +10,7 @@ export default new Vuex.Store({
     search: '',
     searchHistory: Vue.$cookies.get('searchHistory') != undefined ? Vue.$cookies.get('searchHistory') : [],
     watchedVideos: Vue.$cookies.get('history') != undefined ? Vue.$cookies.get('history') : [],
+    title: 'Youtube',
     isMobile: false
   },
   mutations: {
@@ -28,6 +29,10 @@ export default new Vuex.Store({
       state.watchedVideos.unshift(value)
       const history = JSON.stringify(state.watchedVideos)
       Vue.$cookies.set('history', history);
+    },
+    SET_TITLE(state, value) {
+      state.title = value
+      document.title = state.title
     }
   },
   actions: {
@@ -42,6 +47,9 @@ export default new Vuex.Store({
     },
     setWatchedHistory({commit}, value) {
       commit('SET_VIDEOS_WATCHED_HISTORY', value)
+    },
+    setTitlePage({commit}, value) {
+      commit('SET_TITLE', value)
     }
   },
   modules: {

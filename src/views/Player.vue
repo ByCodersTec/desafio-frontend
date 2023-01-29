@@ -40,12 +40,13 @@ export default {
     this.getVideoPlayer();
   },
   methods: {
-    ...mapActions(["setWatchedHistory"]),
+    ...mapActions(["setWatchedHistory", "setTitlePage"]),
     async getVideoPlayer() {
       try {
         this.loading = true;
         const data = await getVideo(this.$route.query.v);
         this.video = data.items[0];
+        this.setTitlePage(this.video.snippet.title + ' - YouTube')
         const channel = await this.getChannelThumb(
           this.video.snippet.channelId
         );

@@ -9,9 +9,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "NotFound",
+  mounted() {
+    this.setTitlePage('Página não encontrada - YouTube')
+  },
   methods: {
+    ...mapActions(["setTitlePage"]),
     goToHome() {
       this.$router.push({ name: "Home", query: { search_query: this.select } });
     },

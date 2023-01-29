@@ -26,6 +26,7 @@
 import { getVideosHistory, listChannels } from "@/services/youtube-api.js";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
+import { mapActions } from "vuex";
 export default {
   name: "History",
   components: {
@@ -40,8 +41,10 @@ export default {
   },
   mounted() {
     this.getVideos();
+    this.setTitlePage('Histórico - YouTube')
   },
   methods: {
+    ...mapActions(["setTitlePage"]),
     async getVideos() {
       try {
         this.loading = true;

@@ -27,6 +27,7 @@
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
 import { listSearch, listChannels } from "@/services/youtube-api.js";
+import { mapActions } from "vuex";
 export default {
   name: "SearchResult",
   components: { VideoThumbnailResult, VideoMobileVideoThumbnail },
@@ -41,6 +42,7 @@ export default {
     this.getVideos(this.$route.query.search_query);
   },
   methods: {
+    ...mapActions(["setTitlePage"]),
     async getVideos(search) {
       try {
         this.loading = true;
@@ -66,6 +68,7 @@ export default {
       const newVideos = [];
       this.videos = newVideos;
       await this.getVideos(this.$route.query.search_query);
+      await this.setTitlePage(this.$route.query.search_query + ' - YouTube')
     },
   },
   computed: {

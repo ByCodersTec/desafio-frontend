@@ -27,6 +27,7 @@
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnail from "@/components/VideoThumbnail.vue";
 import { listVideos, listChannels } from "@/services/youtube-api.js";
+import { mapActions } from "vuex";
 export default {
   name: "Home",
   components: { VideoThumbnail, VideoMobileVideoThumbnail },
@@ -38,8 +39,10 @@ export default {
   },
   mounted() {
     this.getVideos();
+    this.setTitlePage('YouTube')
   },
   methods: {
+    ...mapActions(["setTitlePage"]),
     async getVideos() {
       try {
         this.loading = true;
