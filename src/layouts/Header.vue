@@ -82,7 +82,7 @@ export default {
     this.items = history.concat(this.$store.state.searchHistory);
   },
   methods: {
-    ...mapActions(["setSearch", "setSearchHistory"]),
+    ...mapActions(["setSearch", "setSearchHistory", "setTitlePage"]),
     goToHome() {
       if (this.$route.name != "Home") {
         this.$router.push({
@@ -98,6 +98,7 @@ export default {
     goToResults() {
       if (this.selected != null) {
         this.setSearch(this.selected);
+        this.setTitlePage(this.selected + " - YouTube");
         if (
           this.selected !=
           this.$store.state.searchHistory.find(

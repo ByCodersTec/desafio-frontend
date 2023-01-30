@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { getVideosHistory, listChannels } from "@/services/youtube-api.js";
+import { getVideosHistory, listChannels, listSearch } from "@/services/youtube-api.js";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
@@ -40,8 +40,10 @@ export default {
   data() {
     return {
       videos: [],
+      nextPageToken: "",
       loading: false,
       error: false,
+      loadingNext: false,
       errorMessage: "",
     };
   },
@@ -55,6 +57,7 @@ export default {
       try {
         this.loading = true;
         const data = await getVideosHistory(this.videoHistory.join(","));
+        this.nextPageToken = data.nextPageToken;
         data.items.map(async (video) => {
           const channel = await this.getChannelThumb(video.snippet.channelId);
           video.channel = channel.items[0];
@@ -67,6 +70,30 @@ export default {
         this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
+      }
+    },
+    async getNextVideos(search, token) {
+      try {
+        this.loadingNext = true
+        const data = await listSearch(search, token);
+        this.nextPageToken = data.nextPageToken;
+        data.items.map(async (video) => {
+          const idVideo = this.videos.find(
+            (element) => element.id.videoId === video.id.videoId
+          );
+          if (idVideo === undefined) {
+            const channel = await this.getChannelThumb(video.snippet.channelId);
+            video.channel = channel.items[0];
+            this.videos.push(video);
+          }
+        });
+        this.error = false;
+      } catch (error) {
+        this.error = true;
+        this.loadingNext = false;
+        this.errorMessage = error.response.data.error.message;
+      } finally {
+        this.loadingNext = false;
       }
     },
     getChannelThumb(id) {

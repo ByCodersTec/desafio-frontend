@@ -18,7 +18,7 @@ export const listChannels = async (id) => {
 
 export const listSearch = async (search, nextPageToken = '') => {
   const { data } = await apiInstance.get(
-    `search?key=${key}&part=snippet&q=${search}&maxResults=5&pageToken=${nextPageToken}&type=video`
+    `search?key=${key}&part=snippet&q=${search}&maxResults=12&pageToken=${nextPageToken}&type=video`
   );
   return data;
 };
@@ -39,7 +39,7 @@ export const listVideosRecommended = async (id) => {
 
 export const getVideosHistory = async (id) => {
   const { data } = await apiInstance.get(
-    `videos?key=${key}&part=snippet,statistics&id=${id}`
+    `videos?key=${key}&part=snippet,statistics&id=${id}&maxResults=2`
   );
   return data;
 };

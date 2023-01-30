@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :mini-variant.sync="sidebar"
+    :mini-variant.sync="mini"
     clipped
     floating
     class="sidebar"
@@ -36,8 +36,7 @@ export default {
   props: {
     sidebar: {
       type: Boolean,
-      required: true,
-      selectedItem: 0,
+      required: true
     },
   },
   data() {
@@ -49,6 +48,11 @@ export default {
       ],
       mini: true,
     };
+  },
+  watch: {
+    sidebar() {
+      this.mini = !this.mini
+    }
   },
   methods: {
     goTo(route) {

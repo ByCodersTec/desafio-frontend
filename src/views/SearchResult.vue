@@ -24,8 +24,18 @@
         @tryAgain="getVideos($route.query.search_query)"
         :message="errorMessage"
       />
-      <div v-if="nextPageToken" class="d-flex justify-center">
-        <v-icon @click="getNextVideos($route.query.search_query, nextPageToken)"
+      <div class="d-flex justify-center flex-column align-center mt-6" v-if="nextPageToken">
+        <v-progress-circular
+          :size="30"
+          :width="2"
+          color="yt_red"
+          indeterminate
+          class="my-6"
+          v-if="loadingNext"
+        ></v-progress-circular>
+        <v-icon
+          @click="getNextVideos($route.query.search_query, nextPageToken)"
+          large
           >mdi-chevron-down</v-icon
         >
       </div>
@@ -48,6 +58,7 @@ export default {
       videos: [],
       nextPageToken: "",
       loading: false,
+      loadingNext: false,
       error: false,
       errorMessage: "",
     };
@@ -78,28 +89,26 @@ export default {
     },
     async getNextVideos(search, token) {
       try {
+        this.loadingNext = true
         const data = await listSearch(search, token);
         this.nextPageToken = data.nextPageToken;
         data.items.map(async (video) => {
-          let idVideo = {};
-          idVideo = this.videos.find(
+          const idVideo = this.videos.find(
             (element) => element.id.videoId === video.id.videoId
           );
-          console.log(idVideo);
-          // if (!idVideo) {
-          //   const channel = await this.getChannelThumb(video.snippet.channelId);
-          //   video.channel = channel.items[0];
-          //   this.videos.push(video);
-          // }
+          if (idVideo === undefined) {
+            const channel = await this.getChannelThumb(video.snippet.channelId);
+            video.channel = channel.items[0];
+            this.videos.push(video);
+          }
         });
-        console.log(this.videos);
         this.error = false;
       } catch (error) {
         this.error = true;
-        this.loading = false;
+        this.loadingNext = false;
         this.errorMessage = error.response.data.error.message;
       } finally {
-        this.loading = false;
+        this.loadingNext = false;
       }
     },
     getChannelThumb(id) {

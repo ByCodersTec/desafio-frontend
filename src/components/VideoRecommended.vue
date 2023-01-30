@@ -5,7 +5,7 @@
     <div
       v-for="video in videos"
       :key="video.id.videoId"
-      class="d-flex justify-start align-start mb-3"
+      class="d-flex justify-start align-start mb-3 video"
       @click="goToPlayer(video.id)"
     >
       <img
@@ -43,7 +43,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.thumbnails {
-  width: 40%;
+.video {
+  cursor: pointer;
+  .thumbnails {
+    width: 40%;
+  }
 }
 </style>

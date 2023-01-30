@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-for="video in videos" :key="video.id" class="video" @click="goToPlayer(video.id)">
+    <div
+      v-for="video in videos"
+      :key="video.id"
+      class="video"
+      @click="goToPlayer(video.id)"
+    >
       <img
         :src="video.snippet.thumbnails.medium.url"
         :alt="video.snippet.title"
@@ -50,3 +55,17 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.video {
+  transition: all 0.3s ease-out;
+  &:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    background: #fff;
+    transition: all 0.3s ease-out;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+</style>

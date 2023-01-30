@@ -19,7 +19,11 @@
         class="videos"
       />
       <VideoThumbnail v-else :videos="videos" class="videos" />
-      <ErrorMessage v-if="error" @tryAgain="getVideos" :message="errorMessage"/>
+      <ErrorMessage
+        v-if="error"
+        @tryAgain="getVideos"
+        :message="errorMessage"
+      />
     </div>
   </div>
 </template>
@@ -38,12 +42,12 @@ export default {
       videos: [],
       loading: false,
       error: false,
-      errorMessage: ''
+      errorMessage: "",
     };
   },
   mounted() {
     this.getVideos();
-    this.setTitlePage('YouTube')
+    this.setTitlePage("YouTube");
   },
   methods: {
     ...mapActions(["setTitlePage"]),
@@ -56,11 +60,11 @@ export default {
           video.channel = channel.items[0];
           this.videos.push(video);
         });
-        this.error = false
-      } catch(error) {
-        this.error = true
+        this.error = false;
+      } catch (error) {
+        this.error = true;
         this.loading = false;
-        this.errorMessage = error.response.data.error.message
+        this.errorMessage = error.response.data.error.message;
       } finally {
         this.loading = false;
       }
@@ -68,7 +72,7 @@ export default {
     getChannelThumb(id) {
       const channel = listChannels(id);
       return channel;
-    }
+    },
   },
   computed: {
     isMobile() {

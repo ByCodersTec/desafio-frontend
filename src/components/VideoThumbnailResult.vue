@@ -3,7 +3,7 @@
     <div
       v-for="video in videos"
       :key="$route.name === 'SearchResult' ? video.id.videoId : video.id"
-      class="d-flex justify-start align-start mb-3"
+      class="d-flex justify-start align-start mb-3 video"
       @click="goToPlayer($route.name === 'SearchResult' ? video.id.videoId : video.id)"
     >
       <img
@@ -50,3 +50,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.video:hover {
+  cursor: pointer;
+}
+</style>
