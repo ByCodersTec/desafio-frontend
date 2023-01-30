@@ -1,13 +1,6 @@
 <template>
   <div class="search">
-    <div v-if="loading" class="d-flex justify-center align-center loading">
-      <v-progress-circular
-        :size="70"
-        :width="2"
-        color="yt_red"
-        indeterminate
-      ></v-progress-circular>
-    </div>
+    <Loading v-if="loading" />
     <div v-else>
       <div v-if="!isMobile">
         <h4 class="body-1">Resultado da busca 🔍</h4>
@@ -25,14 +18,7 @@
         :message="errorMessage"
       />
       <div class="d-flex justify-center flex-column align-center mt-6" v-if="nextPageToken">
-        <v-progress-circular
-          :size="30"
-          :width="2"
-          color="yt_red"
-          indeterminate
-          class="my-6"
-          v-if="loadingNext"
-        ></v-progress-circular>
+          <Loading v-if="loadingNext" />
         <v-icon
           @click="getNextVideos($route.query.search_query, nextPageToken)"
           large
@@ -44,6 +30,7 @@
 </template>
 
 <script>
+import Loading from "@/components/Loading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
@@ -51,7 +38,7 @@ import { listSearch, listChannels } from "@/services/youtube-api.js";
 import { mapActions } from "vuex";
 export default {
   name: "SearchResult",
-  components: { VideoThumbnailResult, VideoMobileVideoThumbnail, ErrorMessage },
+  components: { VideoThumbnailResult, VideoMobileVideoThumbnail, ErrorMessage, Loading },
   data() {
     return {
       search: "",

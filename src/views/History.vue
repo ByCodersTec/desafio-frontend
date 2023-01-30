@@ -1,13 +1,6 @@
 <template>
   <div class="history">
-    <div v-if="loading" class="d-flex justify-center align-center loading">
-      <v-progress-circular
-        :size="70"
-        :width="2"
-        color="yt_red"
-        indeterminate
-      ></v-progress-circular>
-    </div>
+    <Loading v-if="loading" />
     <div v-else>
       <div v-if="!isMobile">
         <h4 class="body-1">Histórico de exibição 🕐</h4>
@@ -26,6 +19,7 @@
 
 <script>
 import { getVideosHistory, listChannels, listSearch } from "@/services/youtube-api.js";
+import Loading from "@/components/Loading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnailResult from "@/components/VideoThumbnailResult.vue";
@@ -36,6 +30,7 @@ export default {
     VideoThumbnailResult,
     VideoMobileVideoThumbnail,
     ErrorMessage,
+    Loading
   },
   data() {
     return {

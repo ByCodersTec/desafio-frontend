@@ -1,13 +1,6 @@
 <template>
   <div>
-    <div v-if="loading" class="d-flex justify-center align-center loading">
-      <v-progress-circular
-        :size="70"
-        :width="2"
-        color="yt_red"
-        indeterminate
-      ></v-progress-circular>
-    </div>
+    <Loading v-if="loading" />
     <div v-else>
       <ErrorMessage
         v-if="error"
@@ -29,6 +22,7 @@ import {
   listChannels,
   listVideosRecommended,
 } from "@/services/youtube-api.js";
+import Loading from "@/components/Loading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
@@ -41,6 +35,7 @@ export default {
     VideoMobileVideoThumbnail,
     VideoRecommended,
     ErrorMessage,
+    Loading
   },
   data() {
     return {
