@@ -35,7 +35,6 @@ const routes = [
       },
       {
         path: "*",
-        // path: "/:catchAll(.*)",
         name: "NotFound",
         component: () =>
           import(/* webpackChunkName: "home" */ "../views/NotFound.vue"),

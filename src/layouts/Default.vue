@@ -41,3 +41,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.grid-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+</style>

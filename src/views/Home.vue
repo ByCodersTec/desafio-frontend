@@ -1,59 +1,111 @@
 <template>
   <div class="home">
-    <div v-if="loading" class="d-flex justify-center align-center loading">
-      <v-progress-circular
-        :size="70"
-        :width="2"
-        color="yt_red"
-        indeterminate
-      ></v-progress-circular>
-    </div>
-    <div v-else>
-      <div v-if="!isMobile">
-        <h4 class="body-1">Em alta 🔥</h4>
-        <v-divider class="mb-6 mt-3"></v-divider>
+    <div>
+      <div class="mb-9">
+        <div v-if="!isMobile">
+          <h4 class="body-1">Em alta 🔥</h4>
+          <v-divider class="mb-6 mt-3"></v-divider>
+        </div>
+        <Loading v-if="loadingVideo" />
+        <div v-else>
+          <ErrorMessage
+            v-if="error"
+            @tryAgain="getVideos"
+            :message="errorMessage"
+          />
+          <div v-else>
+            <VideoMobileVideoThumbnail
+              v-if="isMobile"
+              :videos="videos"
+              class="videos"
+            />
+            <VideoThumbnail v-else :videos="videos" class="videos" />
+          </div>
+        </div>
       </div>
-      <VideoMobileVideoThumbnail
-        v-if="isMobile"
-        :videos="videos"
-        class="videos"
-      />
-      <VideoThumbnail v-else :videos="videos" class="videos" />
-      <ErrorMessage
-        v-if="error"
-        @tryAgain="getVideos"
-        :message="errorMessage"
-      />
+      <div>
+        <div v-if="!isMobile">
+          <h4 class="body-1">Categorias 🎬</h4>
+          <v-divider class="mb-6 mt-3"></v-divider>
+        </div>
+        <v-slide-group v-if="categories" show-arrows="always" class="mb-6 mt-3">
+          <v-slide-item v-for="category in categories" :key="category.id">
+            <v-btn
+              class="mx-2"
+              :input-value="selectedCategory === category.id"
+              active-class="yt_red yt_white--text"
+              depressed
+              rounded
+              @click="getVideosByCategories(category.id)"
+            >
+              {{ category.snippet.title }}
+            </v-btn>
+          </v-slide-item>
+        </v-slide-group>
+        <Loading v-if="loadingCategory" />
+        <div v-else>
+          <ErrorMessage
+            v-if="errorCategory"
+            @tryAgain="getVideoCategories"
+            :message="errorMessageCategory"
+          />
+          <VideoMobileVideoThumbnail
+            v-if="isMobile"
+            :videos="videosCategories"
+            class="videos"
+          />
+          <VideoThumbnail v-else :videos="videosCategories" class="videos" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Loading from "@/components/Loading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
 import VideoThumbnail from "@/components/VideoThumbnail.vue";
-import { listVideos, listChannels } from "@/services/youtube-api.js";
+import {
+  listVideos,
+  listChannels,
+  listVideoCategories,
+  listVideosByCategories,
+} from "@/services/youtube-api.js";
 import { mapActions } from "vuex";
 export default {
   name: "Home",
-  components: { VideoThumbnail, VideoMobileVideoThumbnail, ErrorMessage },
+  components: {
+    VideoThumbnail,
+    VideoMobileVideoThumbnail,
+    ErrorMessage,
+    Loading,
+  },
   data() {
     return {
       videos: [],
+      loadingVideo: false,
       loading: false,
       error: false,
       errorMessage: "",
+      categories: [],
+      videosCategories: [],
+      loadingCategory: false,
+      errorCategory: false,
+      errorMessageCategory: "",
+      selectedCategory: "1",
     };
   },
   mounted() {
     this.getVideos();
+    this.getVideoCategories();
     this.setTitlePage("YouTube");
   },
   methods: {
     ...mapActions(["setTitlePage"]),
     async getVideos() {
       try {
-        this.loading = true;
+        this.loadingVideo = true;
         const data = await listVideos();
         data.items.map(async (video) => {
           const channel = await this.getChannelThumb(video.snippet.channelId);
@@ -63,15 +115,46 @@ export default {
         this.error = false;
       } catch (error) {
         this.error = true;
-        this.loading = false;
+        this.loadingVideo = false;
         this.errorMessage = error.response.data.error.message;
       } finally {
-        this.loading = false;
+        this.loadingVideo = false;
+      }
+    },
+    async getVideosByCategories(id) {
+      this.selectedCategory = id;
+      this.videosCategories = [];
+      try {
+        this.loadingCategory = true;
+        const data = await listVideosByCategories(id);
+        data.items.map(async (video) => {
+          const channel = await this.getChannelThumb(video.snippet.channelId);
+          video.channel = channel.items[0];
+          this.videosCategories.push(video);
+        });
+        this.errorCategory = false;
+      } catch (error) {
+        this.errorCategory = true;
+        this.loadingCategory = false;
+        this.errorMessageCategory = error.response.data.error.message;
+      } finally {
+        this.loadingCategory = false;
       }
     },
     getChannelThumb(id) {
       const channel = listChannels(id);
       return channel;
+    },
+    async getVideoCategories() {
+      try {
+        const data = await listVideoCategories();
+        this.categories = data.items;
+        await this.getVideosByCategories(this.categories[0].id);
+        this.errorCategory = false;
+      } catch (error) {
+        this.errorCategory = true;
+        this.errorMessageCategory = error.response.data.error.message;
+      }
     },
   },
   computed: {
@@ -84,9 +167,6 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  .loading {
-    height: 80vh;
-  }
   .videos {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -107,5 +187,8 @@ export default {
       grid-template-columns: repeat(6, 1fr);
     }
   }
+}
+::v-deep .v-slide-group__wrapper {
+  width: 200px;
 }
 </style>

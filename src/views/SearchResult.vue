@@ -10,7 +10,7 @@
     </div>
     <div v-else>
       <div v-if="!isMobile">
-        <h4 class="body-1">Resultado da busca</h4>
+        <h4 class="body-1">Resultado da busca 🔍</h4>
         <v-divider class="mb-6 mt-3"></v-divider>
       </div>
       <VideoMobileVideoThumbnail
