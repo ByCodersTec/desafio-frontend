@@ -5,7 +5,7 @@
 - Primeiro, faça o download ou clone o projeto para o seu repositório
 - Instale todas as dependências do projeto com ```npm i```
 - Para conseguir ter acesso a Api do YouTube é necessário inserir a chave da Api no arquivo ```.env```
-- Para rodar o projeto basta utilizar o comando npm ```run serve```
+- Para rodar o projeto basta utilizar o comando ```npm run serve```
 
 ****
 
