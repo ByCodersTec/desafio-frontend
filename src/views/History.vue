@@ -6,19 +6,31 @@
         <h4 class="body-1">Histórico de exibição 🕐</h4>
         <v-divider class="mb-6 mt-3"></v-divider>
       </div>
-      <VideoMobileVideoThumbnail v-if="isMobile" :videos="videos" />
-      <VideoThumbnailResult v-else :videos="videos" />
-      <ErrorMessage
-        v-if="error"
-        @tryAgain="getVideos"
-        :message="errorMessage"
-      />
+      <div v-if="!videos.length">
+        <div class="d-flex flex-column justify-center align-center my-12 pa-3">
+          <v-icon color="yt_red" x-large>mdi-alert-circle-outline</v-icon>
+          <span class="subtitle-1 my-6 text-center">Você ainda não possuí nehum histórico de visualizações</span>
+        </div>
+      </div>
+      <div v-else>
+        <VideoMobileVideoThumbnail v-if="isMobile" :videos="videos" />
+        <VideoThumbnailResult v-else :videos="videos" />
+        <ErrorMessage
+          v-if="error"
+          @tryAgain="getVideos"
+          :message="errorMessage"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getVideosHistory, listChannels, listSearch } from "@/services/youtube-api.js";
+import {
+  getVideosHistory,
+  listChannels,
+  listSearch,
+} from "@/services/youtube-api.js";
 import Loading from "@/components/Loading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import VideoMobileVideoThumbnail from "@/components/VideoMobileVideoThumbnail.vue";
@@ -30,7 +42,7 @@ export default {
     VideoThumbnailResult,
     VideoMobileVideoThumbnail,
     ErrorMessage,
-    Loading
+    Loading,
   },
   data() {
     return {
@@ -69,7 +81,7 @@ export default {
     },
     async getNextVideos(search, token) {
       try {
-        this.loadingNext = true
+        this.loadingNext = true;
         const data = await listSearch(search, token);
         this.nextPageToken = data.nextPageToken;
         data.items.map(async (video) => {

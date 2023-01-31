@@ -8,7 +8,11 @@
         frameborder="0"
         width="100%"
         allow="autoplay"
-      />
+        modestbranding="0"
+        showinfo="1"
+        allowfullscreen
+      >
+      </iframe>
     </div>
     <div :class="[{ 'px-4': isMobile }]">
       <h3 class="my-3">{{ video.snippet.title }}</h3>
@@ -62,7 +66,7 @@ export default {
       return this.video.snippet.description.replaceAll("\n", "<br />");
     },
     videoPath() {
-      return `http://www.youtube.com/embed/${this.video.id}?autoplay=1&showinfo=0&mute=0`;
+      return `https://www.youtube.com/embed/${this.video.id}?autoplay=1&showinfo=1&mute=0`;
     },
     isMobile() {
       return this.$store.state.isMobile;
@@ -71,7 +75,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -85,9 +89,5 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-}
-::v-deep .ytp-chrome-top,
-::v-deep .ytp-gradient-top {
-  display: none !important;
 }
 </style>
